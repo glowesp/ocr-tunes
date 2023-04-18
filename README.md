@@ -12,6 +12,8 @@
 - [] "local" song list if spotify api does not work
 <pre>
 
+---
+
 ## requisites
 *The song library must contain twenty songs. There must be at least three different genres and five
 different artists in the library.*
