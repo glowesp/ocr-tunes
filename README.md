@@ -5,15 +5,19 @@
 
 ---
 
+# prerequisites
+*The song library must contain twenty songs. There must be at least three different genres and five
+different artists in the library.*
+
+![ocrtunes](https://user-images.githubusercontent.com/85636082/232771851-61c5ec26-a2ee-40e2-a914-d2a85b6d174e.png)
+
+---
+
 <pre>
 - [] register / login in system saved to json file 
 - [] create / modify playlists
 - [] link with spotify api to include a larger library of songs
-- [] "local" song list if spotify api does not work
+- [] "local" song list (read prerequisites)
+- [] login / register email
 <pre>
 
----
-
-## requisites
-*The song library must contain twenty songs. There must be at least three different genres and five
-different artists in the library.*
