@@ -1,0 +1,12 @@
+[
+    {
+        "user":"admin", 
+        "pass":"password",
+        "age":40
+    },
+    {
+        "user":"mad",
+        "pass":"yes",
+        "age":3
+    }
+]

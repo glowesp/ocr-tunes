@@ -27,7 +27,7 @@ def spotifyConnect():
 """
 
 def openusersfile():
-    with open('users.json',encoding='UTF-8') as f:
+    with open("program/users.json",encoding='UTF-8') as f:
         users = json.loads(f.read())
         return users
 
@@ -35,6 +35,12 @@ def main():
     print("Welcome to ocr-tunes")
     #spotifyConnect() --WIP
     login()
+
+def addAccount(account):
+    original = openusersfile()
+    original.append(account)
+    with open('users.json','w') as f:
+        f.write(json.dumps(original))
 
 def accAccess():
     username = str(input("input your username "))
@@ -48,12 +54,27 @@ def accAccess():
         accAccess()
 
 def accCreate():
-    """"""
+    account = {}
+    account["user"] = input("input username: ")
+    account["password"] = input("input password ")
+    account["age"] = int(input("input age: "))
+    time.sleep(2)
+    print("setting up user preferences...")
+    time.sleep(0.5)
+    account["fav-genre"] = input("what is your favourite genre? ")
+    account["fav-artist"] = input("what is your favourite artist? ")
+    time.sleep(0.3)
+    print("calculating music based on user preferences...")
+    addAccount(account)
+    accAccess()
 
-def auth(username, password):
-    fileopen = openusersfile()
-    for i in fileopen:
-        print(i)
+def auth(Name,Password):
+    Users = openusersfile()
+    for person in Users:
+        if (person['user']== Name):
+            if (person['pass'] == Password):
+                return True
+
 
 def menu():
     """"""
