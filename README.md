@@ -14,7 +14,7 @@ different artists in the library.*
 ---
 
 <pre>
-- [] register / login in system saved to json file 
+- [x] register / login in system saved to json file 
 - [] create / modify playlists
 - [] link with spotify api to include a larger library of songs
 - [] "local" song list (read prerequisites)

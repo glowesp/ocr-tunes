@@ -27,9 +27,14 @@ def spotifyConnect():
 """
 
 def openusersfile():
-    with open("program/users.json",encoding='UTF-8') as f:
+    with open('/workspaces/ocr-tunes/users.json',encoding='UTF-8') as f:
         users = json.loads(f.read())
         return users
+    
+def openplaylistfile():
+    with open('/workspaces/ocr-tunes/playlists/localplaylist.json.',encoding='UTF-8') as f:
+        list = json.loads(f.read())
+        return list
 
 def main():
     print("Welcome to ocr-tunes")
@@ -39,7 +44,7 @@ def main():
 def addAccount(account):
     original = openusersfile()
     original.append(account)
-    with open('/users.json','w') as f:
+    with open('/workspaces/ocr-tunes/users.json','w') as f:
         f.write(json.dumps(original))
 
 def accAccess():
@@ -47,7 +52,7 @@ def accAccess():
     password = str(input("input your password "))   
 
     if auth(username, password):
-        print("account found")
+        print("you are logged in")
         menu()
     else:
         print("no account matches\n try again")
@@ -56,7 +61,7 @@ def accAccess():
 def accCreate():
     account = {}
     account["user"] = input("input username: ")
-    account["password"] = input("input password ")
+    account["password"] = input("input password: ")
     account["age"] = int(input("input age: "))
     time.sleep(2)
     print("setting up user preferences...")
@@ -66,6 +71,7 @@ def accCreate():
     time.sleep(0.3)
     print("calculating music based on user preferences...")
     addAccount(account)
+    print("login")
     accAccess()
 
 def auth(Name,Password):
@@ -75,17 +81,44 @@ def auth(Name,Password):
     for person in Users:
         if (person['user']== Name):
             useraccept = True
-    for person in Password:
+    for person in Users:
         if (person['password'] == Password):
             passaccept = True
     if useraccept and passaccept:
         return True
         
-            
-
 
 def menu():
-    """"""
+    
+    option = int(input("\n1. search for songs\n2. playlist creator\n3. display songs (local)\n"))
+    if option == 1:
+        print("WIP")
+    elif option == 2:
+        print("WIP")
+    elif option == 3:
+        print("display local songs")
+        print(list)
+    else:
+        print("option not found.")
+        menu()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     main() 
