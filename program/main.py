@@ -39,7 +39,7 @@ def main():
 def addAccount(account):
     original = openusersfile()
     original.append(account)
-    with open('users.json','w') as f:
+    with open('/workspaces/ocr-tunes/program/users.json','w') as f:
         f.write(json.dumps(original))
 
 def accAccess():
