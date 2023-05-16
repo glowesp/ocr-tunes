@@ -39,7 +39,7 @@ def main():
 def addAccount(account):
     original = openusersfile()
     original.append(account)
-    with open('/workspaces/ocr-tunes/program/users.json','w') as f:
+    with open('/users.json','w') as f:
         f.write(json.dumps(original))
 
 def accAccess():
@@ -70,10 +70,18 @@ def accCreate():
 
 def auth(Name,Password):
     Users = openusersfile()
+    useraccept = False
+    passaccept = False
     for person in Users:
         if (person['user']== Name):
-            if (person['pass'] == Password):
-                return True
+            useraccept = True
+    for person in Password:
+        if (person['password'] == Password):
+            passaccept = True
+    if useraccept and passaccept:
+        return True
+        
+            
 
 
 def menu():
