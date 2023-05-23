@@ -33,8 +33,8 @@ def openusersfile():
     
 def openplaylistfile():
     with open('/workspaces/ocr-tunes/playlists/localplaylist.json.',encoding='UTF-8') as f:
-        list = json.loads(f.read())
-        return list
+        plist = json.loads(f.read())
+        return plist
 
 def main():
     print("Welcome to ocr-tunes")
@@ -97,7 +97,8 @@ def menu():
         print("WIP")
     elif option == 3:
         print("display local songs")
-        print(list)
+        plist = openplaylistfile()
+        print(plist)
     else:
         print("option not found.")
         menu()
