@@ -1,4 +1,4 @@
-import time, json, random
+import time, json, random, os, os.path
 
 def login():
     account = input("do you have an account with ocr-tunes? (y/n) ")
@@ -31,8 +31,8 @@ def openusersfile():
         users = json.loads(f.read())
         return users
     
-def openplaylistfile():
-    with open('/workspaces/ocr-tunes/program/playlists',encoding='UTF-8') as f:
+def openplaylistfile(pname):
+    with open(f'/workspaces/ocr-tunes/program/playlists/{pname}.json',encoding='UTF-8') as f:
         plist = json.loads(f.read())
         return plist
 
@@ -87,6 +87,60 @@ def auth(Name,Password):
     if useraccept and passaccept:
         return True
         
+def playlistcreator():
+    songs = {}
+    plistname = input("enter playlist name: ")
+    os.path.isfile(f"/workspaces/ocr-tunes/program/playlists/{plistname}.json")
+    
+    exitinput = True
+
+    if exitinput != False:
+        songname = input("enter a song: ")
+        songartist = input("enter the song artist: ") 
+        songadd = songs.update({songname:songartist})
+
+        quittime = input("would you like to exit playlist creator? (y)")
+        if quittime == "y":
+            exitinput == False
+        
+    jsonobj = json.dumps(songs)
+
+    with open(f"/workspaces/ocr-tunes/program/playlists/{plistname}.json", "w", encoding="utf8") as outfile:
+        outfile.write(jsonobj)
+    
+def playlisteditor():
+    editplaylist = input("enter the playlist that you would like to edit: ")
+    plistoption = input("\n1. edit playlist\n2. delete playlist\n")
+
+    authplist = False
+    if os.path.isfile(f"/workspaces/ocr-tunes/program/playlists/{editplaylist}.json"):
+        authplist = True
+    
+    if authplist !=  False:
+        print("playlist not found, try again")
+        playlisteditor()
+
+    plist = openplaylistfile(f"{editplaylist}")
+    songs = {}
+    exitinput = True
+
+    if plistoption == 1:
+        if exitinput != False:
+            songname = input("enter a song: ")
+            songartist = input("enter the song artist: ") 
+            songadd = songs.update({songname:songartist})
+
+            quittime = input("would you like to exit playlist creator? (y)")
+        if quittime == "y":
+            exitinput == False
+        
+        jsonobj = json.dumps(songs)
+
+        with open(f"/workspaces/ocr-tunes/program/playlists/{plist}.json", "w", encoding="utf8") as outfile:
+            outfile.write(jsonobj)
+    elif plistoption == 2:
+        print("removing playlist...")
+        os.remove(plist)
 
 def menu():
     
@@ -94,10 +148,17 @@ def menu():
     if option == 1:
         print("WIP")
     elif option == 2:
-        print("WIP")
+        option2 = int(input("\n1. create a playlist\n2. edit a playlist\n"))
+        if option2 == 1:
+            playlistcreator()
+        elif option2 == 2:
+            playlisteditor()
+        else:
+            print("invalid option, please try again")
+            menu()
     elif option == 3:
         print("display local songs")
-        plist = openplaylistfile()
+        plist = openplaylistfile("localplaylist")
         print(plist)
     else:
         print("option not found.")
