@@ -32,7 +32,7 @@ def openusersfile():
         return users
     
 def openplaylistfile():
-    with open('/workspaces/ocr-tunes/playlists/localplaylist.json',encoding='UTF-8') as f:
+    with open('/workspaces/ocr-tunes/program/playlists',encoding='UTF-8') as f:
         plist = json.loads(f.read())
         return plist
 
