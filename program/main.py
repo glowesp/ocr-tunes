@@ -1,6 +1,6 @@
-import time, json, random, os, os.path
+import time, json, random, os, os.path # importing all required modules
 
-def login():
+def login(): # login system (asking user if they have an account or not)
     account = input("do you have an account with ocr-tunes? (y/n) ")
     if account == "y":
         print("redirecting")
@@ -13,7 +13,7 @@ def login():
         print("please try again")
         login()
 
-""" --WIP
+""" --WIP (work in progress spotify connection)
 def spotifyConnect():
     spotifyAuth = input("connect to spotify? (y/n) ")
     if spotifyAuth == "y":
@@ -26,28 +26,28 @@ def spotifyConnect():
         spotifyConnect()
 """
 
-def openusersfile():
+def openusersfile(): # opens users file to read
     with open('/workspaces/ocr-tunes/users.json',encoding='UTF-8') as f:
         users = json.loads(f.read())
         return users
     
-def openplaylistfile(pname):
+def openplaylistfile(pname): # function to open playlist from input (pname)
     with open(f'/workspaces/ocr-tunes/program/playlists/{pname}.json',encoding='UTF-8') as f:
         plist = json.loads(f.read())
         return plist
 
-def main():
+def main(): # start
     print("Welcome to ocr-tunes")
     #spotifyConnect() --WIP
     login()
 
-def addAccount(account):
+def addAccount(account): # adding account to database
     original = openusersfile()
     original.append(account)
     with open('/workspaces/ocr-tunes/users.json','w') as f:
         f.write(json.dumps(original))
 
-def accAccess():
+def accAccess(): # logging in, uses auth function to authenticate user details in database
     username = str(input("input your username "))
     password = str(input("input your password "))   
 
@@ -58,7 +58,7 @@ def accAccess():
         print("no account matches\n try again")
         accAccess()
 
-def accCreate():
+def accCreate(): # account creation function, asks for user preferences
     account = {}
     account["user"] = input("input username: ")
     account["password"] = input("input password: ")
@@ -74,7 +74,7 @@ def accCreate():
     print("login")
     accAccess()
 
-def auth(Name,Password):
+def auth(Name,Password): # authenticating function, checks users.json file for correct credentials
     Users = openusersfile()
     useraccept = False
     passaccept = False
@@ -87,7 +87,7 @@ def auth(Name,Password):
     if useraccept and passaccept:
         return True
         
-def playlistcreator():
+def playlistcreator(): # playlist creation function
     songs = {}
     plistname = input("enter playlist name: ")
     os.path.isfile(f"/workspaces/ocr-tunes/program/playlists/{plistname}.json")
@@ -99,26 +99,24 @@ def playlistcreator():
         songartist = input("enter the song artist: ") 
         songadd = songs.update({songname:songartist})
 
-        quittime = input("would you like to exit playlist creator? (y)")
-        if quittime == "y":
-            exitinput == False
+    quittime = input("would you like to exit playlist creator? (y)")
+    if quittime == "y":
+        exitinput == False
+    elif quittime == "n":
+        exitinput == True
+    else:
+        print("invalid option")
+
+
         
     jsonobj = json.dumps(songs)
 
     with open(f"/workspaces/ocr-tunes/program/playlists/{plistname}.json", "w", encoding="utf8") as outfile:
         outfile.write(jsonobj)
     
-def playlisteditor():
+def playlisteditor(): # playlist editor and deleter
     editplaylist = input("enter the playlist that you would like to edit: ")
     plistoption = input("\n1. edit playlist\n2. delete playlist\n")
-
-    authplist = False
-    if os.path.isfile(f"/workspaces/ocr-tunes/program/playlists/{editplaylist}.json"):
-        authplist = True
-    
-    if authplist !=  False:
-        print("playlist not found, try again")
-        playlisteditor()
 
     plist = openplaylistfile(f"{editplaylist}")
     songs = {}
@@ -131,18 +129,23 @@ def playlisteditor():
             songadd = songs.update({songname:songartist})
 
             quittime = input("would you like to exit playlist creator? (y)")
-        if quittime == "y":
-            exitinput == False
+            if quittime == "y":
+                exitinput == False
+            elif quittime == "n":
+                exitinput == True
+            else:
+                print("invalid option")
+
         
         jsonobj = json.dumps(songs)
-
         with open(f"/workspaces/ocr-tunes/program/playlists/{plist}.json", "w", encoding="utf8") as outfile:
             outfile.write(jsonobj)
+    
     elif plistoption == 2:
         print("removing playlist...")
         os.remove(plist)
 
-def menu():
+def menu(): # main menu to house all main functions
     
     option = int(input("\n1. search for songs\n2. playlist creator\n3. display songs (local)\n"))
     if option == 1:
@@ -164,23 +167,5 @@ def menu():
         print("option not found.")
         menu()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
+if __name__ == "__main__": # to execute all files
     main() 
